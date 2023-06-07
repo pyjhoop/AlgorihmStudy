@@ -1,5 +1,8 @@
 # AlgorihmStudy
 
+### 일정관리
+[📆노션 캘린더](https://heliotrope-fish-884.notion.site/60841778a18f4eff8dbc4675472e5152)
+
 ### 📖 목차
 [1️⃣ 스터디 방식](#1️⃣스터디-방식)   
 [2️⃣ 스터디 규칙](#2️⃣스터디-규칙)   
