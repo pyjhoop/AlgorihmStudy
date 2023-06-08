@@ -1,0 +1,22 @@
+N, M 입력받기
+List<List<Integer>> list 선언
+
+for(int i = 0 ~ <m){
+	list 입력받기
+}
+
+int check[N] 선언
+int count = 0;
+for(int i = 0 ~ < N){
+	if(check[i] != 1) {
+		count++;
+		DFS함수(i)
+	}
+}
+
+
+DFS함수(int target){
+	list.get(target).forEach(i ->
+		if(check[i] != 1) DFS(i)
+	}
+}
