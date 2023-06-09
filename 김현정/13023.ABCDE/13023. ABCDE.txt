@@ -1,0 +1,38 @@
+int[] check;
+
+/// main
+n, m입력
+List<List<Integer>> list = new ArrayLIst<>();
+check = new int[n];
+
+for(int i = 0 ~ <n) {
+	list.add(new LinkedList<>());
+}
+
+for(int i = 0 ~ < m){
+	친구관계 list에 setting(양방향)
+}
+
+if(DFS(0)) print(1)
+else print(0);
+
+/// DFS
+boolean DFS(int k){
+	if(k == 5) {
+		return true;
+	}
+
+	for(int i = 0 ~ <n){
+		list.get(i).forEach( i -> {
+			if(i != 0){
+				check[i] = 1;
+				if(DFS(k+1)) return true;
+				check[i] = 0;
+			}
+		}
+	}
+
+	return false;	
+}
+
+
