@@ -1,24 +1,27 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
 
-public class Boj11659 {
-    import java.util.Scanner;
+public class Boj11720 {
 
     public class Main {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            int N = sc.nextInt();
-            String sNum = sc.next();
-            char[] cNum = sNum.toCharArray();
-            int sum = 0;
-            for (int i = 0; i < cNum.length; i++) {
-                sum += cNum[i] - '0';
+        public class Main {
+            public static void main(String[] args) {
+                Scanner sc = new Scanner(System.in);
+                int N = sc.nextInt();
+                int A[] = new int[N];
+                for (int i = 0; i < N; i++) {
+                    A[i] = sc.nextInt();
+                }
+                long sum = 0;
+                long max = 0;
+                for (int i = 0; i < N; i++) {
+                    sum = sum + A[i];
+                    max = max < A[i] ? A[i] : max;
+                }
+
+                System.out.println(sum * 100.0 / max / N);
             }
-            System.out.println(sum);
         }
     }
 }
