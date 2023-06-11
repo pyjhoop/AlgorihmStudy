@@ -15,27 +15,39 @@ public class Boj11660 {
                     new BufferedReader(new InputStreamReader(System.in));
             StringTokenizer stringTokenizer =
                     new StringTokenizer(bufferedReader.readLine());
-            // 데이터 개수, 질문 개수
-            int suNo = Integer.parseInt(stringTokenizer.nextToken());
+            // 배열의 크기, 질문 개수
+            int arrSize = Integer.parseInt(stringTokenizer.nextToken());
             int quizNo = Integer.parseInt(stringTokenizer.nextToken());
 
-            // 0번째 인덱스는 값이 0인, 데이터 개수보다 +1개의 배열 생성
-            long[] sum = new long[suNo+1];
-
-            // 데이터 입력 받기
-            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-
-            // 합 배열 생성하기
-            for (int i = 1; i <= suNo; i++) {
-                sum[i] = sum[i-1] + Integer.parseInt(stringTokenizer.nextToken());
+            // 기본 배열 만들기
+            int A[][] =  new int[arrSize+1][arrSize+1];
+            for (int i = 1; i <= arrSize; i++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+                for (int j = 1; j <= arrSize; j++) {
+                    A[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                }
             }
 
-            // i번째 부터 j번째 수까지 합하는 공식은 "구간합 = S[j] - S[i-1]"
+            // 합 배열 만들기
+            int D[][] = new int[arrSize+1][arrSize+1];
+            for (int i = 1; i <= arrSize; i++) {
+                for (int j = 1; j <= arrSize; j++) {
+                    // 합배열 만드는 공식
+                    D[i][j] = D[i][j-1] + D[i-1][j] - D[i-1][j-1] + A[i][j];
+                }
+            }
+
+            // 구간 합 계산하기
             for (int i = 0; i < quizNo; i++) {
                 stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-                int j  = Integer.parseInt(stringTokenizer.nextToken());
-                int k = Integer.parseInt(stringTokenizer.nextToken());
-                System.out.println(sum[k] - sum[j-1]);
+                int x1 = Integer.parseInt(stringTokenizer.nextToken());
+                int y1 = Integer.parseInt(stringTokenizer.nextToken());
+                int x2 = Integer.parseInt(stringTokenizer.nextToken());
+                int y2 = Integer.parseInt(stringTokenizer.nextToken());
+
+                // 구간 합 계산하는 공식
+                int result = D[x2][y2] - D[x1-1][y2] - D[x2][y1-1] + D[x1 -1][y1-1];
+                System.out.println(result);
             }
         }
     }
