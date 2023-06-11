@@ -1,0 +1,22 @@
+n입력
+PriorityQueue pq_plus 내림차순, pq_minus 오름차순  생성
+for(int i = 0 ~ < n){
+	temp 입력
+	if(temp > 0) pq_plus.add
+	else pq_minus.add
+}
+long result = 0;
+while(pq_plus.size() > 1) {
+	int a = pq+.poll()
+	int b= pq+.poll()
+	if(a == 1 || b == 1) result += (a + b)
+	else result += a * b
+}
+
+while(pq_minus() > 1){
+	int a = pq-.poll()
+	int b= pq-.poll()
+	else result += a * b	
+}
+
+pq 비었는지 확인 -> result 더함
