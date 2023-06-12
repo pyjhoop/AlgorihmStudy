@@ -1,54 +1,46 @@
-package org.example;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-
+// 나머지 합 구하기
 public class Boj10986 {
     import java.util.*;
     import java.io.*;
 
     public class Main {
         public static void main(String[] args) throws IOException {
-            BufferedReader bufferedReader =
-                    new BufferedReader(new InputStreamReader(System.in));
-            StringTokenizer stringTokenizer =
-                    new StringTokenizer(bufferedReader.readLine());
-            // 배열의 크기, 질문 개수
-            int arrSize = Integer.parseInt(stringTokenizer.nextToken());
-            int quizNo = Integer.parseInt(stringTokenizer.nextToken());
 
-            // 기본 배열 만들기
-            int A[][] =  new int[arrSize+1][arrSize+1];
-            for (int i = 1; i <= arrSize; i++) {
-                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-                for (int j = 1; j <= arrSize; j++) {
-                    A[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+            Scanner sc = new Scanner(System.in);
+            // 수열의 개수
+            int N = sc.nextInt();
+            // 나눠떨어져야 하는 수
+            int M = sc.nextInt();
+
+            // 합배열 선언
+            long[] S = new long[N];
+            long[] C = new long[M];
+            long answer = 0;
+
+            // 값 입력 받기
+            S[0] = sc.nextInt();
+
+            // 수열 합 배열 만들기
+            for (int i = 1; i < N; i++) {
+                S[i] = S[i-1] + sc.nextInt();
+            }
+
+            for (int i = 0; i < N; i++) {
+                int remainder = (int) (S[i] % M);
+                // 나눴을때 나머지가 0인 값 카운트
+                if(remainder == 0) answer++;
+                // 나머지가 같은 인덱스의 개수 카운팅하기
+                C[remainder]++;
+            }
+
+            for (int i = 0; i < M; i++) {
+                if(C[i] > 1){
+                    // 나머지가 같은 인덱스 중 2개를 뽑는 경우의 수를 더하기
+                    answer = answer + (C[i] * (C[i] - 1) / 2);
                 }
             }
 
-            // 합 배열 만들기
-            int D[][] = new int[arrSize+1][arrSize+1];
-            for (int i = 1; i <= arrSize; i++) {
-                for (int j = 1; j <= arrSize; j++) {
-                    // 합배열 만드는 공식
-                    D[i][j] = D[i][j-1] + D[i-1][j] - D[i-1][j-1] + A[i][j];
-                }
-            }
-
-            // 구간 합 계산하기
-            for (int i = 0; i < quizNo; i++) {
-                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-                int x1 = Integer.parseInt(stringTokenizer.nextToken());
-                int y1 = Integer.parseInt(stringTokenizer.nextToken());
-                int x2 = Integer.parseInt(stringTokenizer.nextToken());
-                int y2 = Integer.parseInt(stringTokenizer.nextToken());
-
-                // 구간 합 계산하는 공식
-                int result = D[x2][y2] - D[x1-1][y2] - D[x2][y1-1] + D[x1 -1][y1-1];
-                System.out.println(result);
-            }
+            System.out.println(answer);
         }
     }
 }
