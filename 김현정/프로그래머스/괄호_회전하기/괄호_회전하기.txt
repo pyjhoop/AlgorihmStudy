@@ -1,0 +1,14 @@
+int result = 0;
+if(s.length %2 != 0) print(result) return;
+
+for(int i = 0 ~ < s.length){
+	for(int j = i ~ < i + s.length){
+		int index = (j < s.length)? j : s.length - j;
+		int target = s.charAt(index);
+		열린괄호라면? -> stack.push()
+		else {
+			if(stack.isEmpty() || stack.peek() != 같은계열) break;
+		}
+		여기까지오면 바른괄호 result++;
+	}
+}
