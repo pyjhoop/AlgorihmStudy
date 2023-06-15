@@ -1,53 +1,65 @@
-import java.util.Stack;
+import java.util.*;
 // 프로그래머스 괄호 회전하기
 class Solution {
     // 스택 자료구조 활용
-    public int solution(String s) {
-        int answer = 0;
+    static Queue<Integer> queue = new LinkedList<>();
+    public static void main(String[] args) {
+        solution(new int[]{1, 1, 9, 1, 1, 1}, 5);
+    }
 
-        // for문을 돌면서 문자열 회전
-        for (int i = 0; i < s.length(); i++) {
-            s = s.substring(1) + s.charAt(0);
-            if(checkValidParentheses(s)){
-                answer++;
-            }
+    public static int solution(int[] priorities, int location) {
+        List<Integer> usedNum = new ArrayList<>();
 
+        // 큐 만들기
+        for (int i = 0; i < priorities.length; i++) {
+            queue.add(priorities[i]);
         }
+
+        // 큐가 빌때까지
+        int count = 0;
+        while (!queue.isEmpty()){
+            // poll로 검사할 숫자 꺼내기
+            int temp = queue.poll();
+            // 우선순위가 높은 숫자 검증
+            boolean yn = validation(temp);
+            // 우선순위가 가장 높을때 List로 이동 그렇지 않을때 다시 큐에 삽입
+            if(yn){
+//                usedNum.add(temp);
+                usedNum.add(count);
+            }else {
+                queue.add(temp);
+            }
+        }
+
+        int locationVal = priorities[location];
+
+        int answer = 0;
+        // List 인덱스 값 리턴
+        for (int i = 0; i < usedNum.size(); i++) {
+            if(usedNum.get(i) == locationVal){
+                answer = i+1;
+                break;
+            };
+        }
+
+        System.out.println(answer);
         return answer;
     }
 
-    // 올바른 괄호 문자열인지 검사하는 메소드
-    private boolean checkValidParentheses(String s) {
-        Stack<Character> stack = new Stack<>();
+    private static boolean validation(int temp) {
+        int size = queue.size();
 
-        for (char c : s.toCharArray()) {
-            if(isOpenParenthese(c)){ // 여는 괄호인 경우 스택에 삽입
-                stack.push(c);
-            } else { // 닫는 괄호인 경우 스택에서 맨 위의 요소와 짝을 검사
-                if(stack.empty() || !isPair(stack.peek(), c)){
-                    return false; // 짝이 맞지 않으면 false 반환
-                }
-                stack.pop(); // 짝이 맞으면 스택에서 요소 제거
+        boolean val = true;
+        // 큐의 사이즈 만큼 우선순위 검증
+        for (int j = 0; j < size; j++) {
+            int temp2 = queue.peek();
+            if(temp2 <= temp){ // 꺼낸 값보다 우선순위가 작을때
+                queue.add(queue.poll());
+            }else { // 꺼낸 값보다 우선순위가 클때
+                queue.add(queue.poll());
+                val = false;
             }
         }
-        return stack.isEmpty(); // 스택이 비어있으면 true, 아니면 false 반환
-    }
-
-    // 짝이 맞는지 확인하는 메서드
-    private boolean isPair(Character open, char close) {
-        if((open == '(' && close == ')') || (open == '[' && close == ']') || (open == '{' && close == '}')){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    // 여는 괄호인지 확인하는 메서드
-    private boolean isOpenParenthese(char c) {
-        if (c == '(' || c == '[' || c == '{'){
-            return true;
-        }else {
-            return false;
-        }
+        return val;
     }
 }
